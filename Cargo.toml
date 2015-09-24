@@ -1,0 +1,4 @@
+[package]
+name = "pumpkin"
+version = "0.1.0"
+authors = ["Zach Dziura <zcdziura@gmail.com>"]
