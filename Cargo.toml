@@ -2,3 +2,7 @@
 name = "pumpkin"
 version = "0.1.0"
 authors = ["Zach Dziura <zcdziura@gmail.com>"]
+
+[dependencies]
+num = "0.1.27"
+rand = "0.3.11"
