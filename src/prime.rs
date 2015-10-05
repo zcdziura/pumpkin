@@ -211,3 +211,21 @@ fn rewrite(candidate: &Int) -> (Int, Int) {
 
     (s, d)
 }
+
+#[cfg(test)]
+mod tests {
+    extern crate test;
+
+    use super::*;
+    use self::test::Bencher;
+
+    #[bench]
+    fn bench_prime_gen_1024(b: &mut Bencher) {
+        b.iter(|| Prime::new(1024));
+    }
+
+    #[bench]
+    fn bench_prime_gen_2048(b: &mut Bencher) {
+        b.iter(|| Prime::new(2048));
+    }
+}
