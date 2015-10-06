@@ -68,6 +68,34 @@ static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
 7703, 7717, 7723, 7727, 7741, 7753, 7757, 7759, 7789, 7793, 7817, 7823, 7829, 7841, 7853, 7867,
 7873, 7877, 7879, 7883, 7901, 7907, 7919];
 
+/// An arbitrarily-length prime number, suitable for cryptographic purposes.
+///
+/// All `Prime`s are initially seeded from the `rand::OsRng` random number
+/// generator, which itself uses the operating system's main source of entropy.
+///
+/// Primes are verified to be prime by running the following three checks
+/// during initialization:
+///
+///     1) Dividing the initial "prime number candidate" by the first 1,000
+///     prime numbers, and checking the remainder. Should the remainder ever be
+///     zero, then add two to the candidate and try again.
+///
+///     2) Run a Fermat Primality Test on the candidate. If it doesn't pass,
+///     add two to the candidate and goto Step 1.
+///
+///     3) Finally, complete five rounds of the Miller-Rabin Primality Test.
+///     Should any of the tests pass, add two to the candidate and goto Step 1.
+///
+/// The preceding steps mirror those used by GnuPG, a leading PGP implementation
+/// used by thousands of users all across the world. Because the intial prime
+/// number candidate is generated from the operating system's source of
+/// entropy, we can be reasonably sure that the generated `Prime` is, in fact,
+/// prime.
+///
+/// `Prime`s are built upon the `Int` type as defined in the `ramp` crate. In
+/// fact, all operations that you can do with `Int`s, you can do with `Prime`s
+/// as well. `Prime`s simply guarantee that the number you're dealing with is,
+/// a prime number.
 #[derive(Debug)]
 pub struct Prime {
     bit_length: usize,
@@ -75,7 +103,12 @@ pub struct Prime {
 }
 
 impl Prime {
+    /// Constructs a new `Prime` with a size of `bit_length` bits.
+    ///
+    /// The `bit_length` must be at least 2. While it doesn't make much sense
+    /// to only generate a 2-bit random number, them's the rules.
     pub fn new(bit_length: usize) -> Prime {
+        assert!(bit_length >= 2);
         let one = Int::one();
         let two = &one + &one;
         let mut rngesus = match OsRng::new() {
@@ -97,7 +130,6 @@ impl Prime {
             num: candidate
         }
     }
-
 }
 
 impl fmt::Display for Prime {
@@ -106,8 +138,7 @@ impl fmt::Display for Prime {
     }
 }
 
-
-pub fn is_prime(candidate: &Int) -> bool {
+fn is_prime(candidate: &Int) -> bool {
     // First, iterate through the array of small primes and divide the
     // candidate. If the candidate divides any of them, then we know the number
     // is a multiple of that prime; that is, the candidate is composite.
@@ -137,7 +168,7 @@ pub fn is_prime(candidate: &Int) -> bool {
     true
 }
 
-pub fn fermat(candidate: &Int) -> bool {
+fn fermat(candidate: &Int) -> bool {
     // Perform Fermat's little theorem on the candidate to determine probable
     // primality.
     let one = Int::one();
@@ -152,7 +183,7 @@ pub fn fermat(candidate: &Int) -> bool {
     }
 }
 
-pub fn miller_rabin(candidate: &Int) -> bool {
+fn miller_rabin(candidate: &Int) -> bool {
     // Perform five iterations of the Miller-Rabin test on the candidate.
     let (s, d) = rewrite(candidate);
     let one = Int::one();
