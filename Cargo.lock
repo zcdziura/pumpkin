@@ -2,6 +2,8 @@
 name = "pumpkin"
 version = "0.1.0"
 dependencies = [
+ "custom_derive 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "newtype_derive 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "ramp 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.11 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -16,6 +18,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "custom_derive"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "gcc"
 version = "0.3.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -27,6 +34,11 @@ dependencies = [
 [[package]]
 name = "libc"
 version = "0.1.10"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "newtype_derive"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]

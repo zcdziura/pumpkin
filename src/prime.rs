@@ -96,10 +96,10 @@ static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
 /// fact, all operations that you can do with `Int`s, you can do with `Prime`s
 /// as well. `Prime`s simply guarantee that the number you're dealing with is,
 /// a prime number.
-#[derive(Debug)]
-pub struct Prime {
-    bit_length: usize,
-    num: Int
+custom_derive! {
+    #[derive(Debug)]
+    #[derive(NewtypeAdd, NewtypeSub, NewtypeMul, NewtypeDiv)]
+    pub struct Prime(Int); 
 }
 
 impl Prime {
@@ -125,16 +125,14 @@ impl Prime {
             candidate += &two;
         }
 
-        Prime {
-            bit_length: bit_length,
-            num: candidate
-        }
+        Prime(candidate)
     }
 }
 
 impl fmt::Display for Prime {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.num)
+        let &Prime(ref num) = self;
+        write!(f, "{}", num)
     }
 }
 
@@ -260,3 +258,4 @@ mod tests {
         b.iter(|| Prime::new(2048));
     }
 }
+
