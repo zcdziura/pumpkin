@@ -94,11 +94,10 @@ static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
 ///
 /// `Prime`s are built upon the `Int` type as defined in the `ramp` crate. In
 /// fact, all operations that you can do with `Int`s, you can do with `Prime`s
-/// as well. `Prime`s simply guarantee that the number you're dealing with is,
-/// a prime number.
+/// as well. `Prime`s simply claim that the number you're dealing with is a
+/// prime number.
 custom_derive! {
-    #[derive(Debug)]
-    #[derive(NewtypeAdd, NewtypeSub, NewtypeMul, NewtypeDiv)]
+    #[derive(Debug, NewtypeAdd, NewtypeSub, NewtypeMul, NewtypeDiv)]
     pub struct Prime(Int); 
 }
 
@@ -240,22 +239,3 @@ fn rewrite(candidate: &Int) -> (Int, Int) {
 
     (s, d)
 }
-
-#[cfg(test)]
-mod tests {
-    extern crate test;
-
-    use super::*;
-    use self::test::Bencher;
-
-    #[bench]
-    fn bench_prime_gen_1024(b: &mut Bencher) {
-        b.iter(|| Prime::new(1024));
-    }
-
-    #[bench]
-    fn bench_prime_gen_2048(b: &mut Bencher) {
-        b.iter(|| Prime::new(2048));
-    }
-}
-

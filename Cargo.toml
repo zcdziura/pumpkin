@@ -6,5 +6,5 @@ authors = ["Zach Dziura <zcdziura@gmail.com>"]
 [dependencies]
 custom_derive = "0.1.2"
 newtype_derive = "0.1.2"
-ramp = "0.1.9"
+ramp = "0.1.*"
 rand = "0.3.11"
