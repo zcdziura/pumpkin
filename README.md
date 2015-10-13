@@ -22,7 +22,7 @@ between 1s and 5s on average, though of course your mileage may vary.
 
 ## Example
 
-```
+```rust
 extern crate pumpkin;
 
 use pumpkin::Prime;
@@ -57,7 +57,7 @@ Theorem](https://www.wikiwand.com/en/Fermat's_little_theorem).
 Test](https://www.wikiwand.com/en/Miller%E2%80%93Rabin_primality_test).
 
 `Prime`s are seeded by `rand::OsRng`, which receives its entropy via the
-operating system's own entropy source (such as `/dev/urandom'). Thus, because we
+operating system's own entropy source (such as `/dev/urandom`). Thus, because we
 can be confident that the generated candidate number is truly random (or as
 close to truly random as the user can hope), we don't need to do more than five
 iterations of the Miller-Rabin test to ensure primality.
