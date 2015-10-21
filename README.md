@@ -1,6 +1,6 @@
 # Pumpkin
 
-A cryptographically-secure pseudo-random number generator for generating large 
+A cryptographically secure pseudo-random number generator for generating large 
 prime.
 
 ## What's up with the name?
