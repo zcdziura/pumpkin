@@ -32,7 +32,7 @@ fn main() {
     let q = Prime::new(2048);
     let e = p * q;
 
-    println("{}", e);
+    println!("{}", e);
 
     /*
      * 75222035638256552797269351238215022250546763213674706... Some massive
