@@ -107,13 +107,22 @@ impl Prime {
     /// The `bit_length` must be at least 2. While it doesn't make much sense
     /// to only generate a 2-bit random number, them's the rules.
     pub fn new(bit_length: usize) -> Prime {
-        assert!(bit_length >= 2);
-        let one = Int::one();
-        let two = &one + &one;
+        debug_assert!(bit_length >= 2);
         let mut rngesus = match OsRng::new() {
             Ok(rng) => rng,
             Err(reason) => panic!("Error initializing RNG: {}", reason)
         };
+        
+        Prime::from_rng(bit_length, &mut rngesus)
+    }
+
+    /// Constructs a new `Prime` with the size of `bit_length` bits, sourced
+    /// from an already-created `OsRng`. Not that you can **ONLY** use an
+    /// `OsRng`, as it uses the operating system's secure source of entropy.
+    pub fn from_rng(bit_length: usize, rngesus: &mut OsRng) -> Prime {
+        debug_assert!(bit_length >= 2);
+        let one = Int::one();
+        let two = &one + &one;
         let mut candidate = rngesus.gen_uint(bit_length);
         
         // Make sure candidate is odd before continuing...
@@ -186,14 +195,14 @@ fn miller_rabin(candidate: &Int) -> bool {
     let one = Int::one();
     let two = (&one).add(&one);
 
-    for _ in (0..5) {
+    for _ in 0..5 {
         let basis = thread_rng().gen_int_range(&two, candidate);
         let mut x = mod_exp(&basis, &d, candidate);
 
         if x.eq(&one) || x.eq(&(candidate.sub(&one))) {
             continue;
         } else {
-            for _ in (one.clone() .. s.sub(&one)) {
+            for _ in one.clone() .. s.sub(&one) {
                 x = mod_exp(&x, &two, candidate);
                 if x == one.clone() {
                     return false;
