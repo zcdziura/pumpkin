@@ -10,7 +10,7 @@ license = "Unlicense/MIT"
 [dependencies]
 custom_derive = "0.1.*"
 newtype_derive = "0.1.*"
-ramp = "0.1.*"
+ramp = "0.2.*"
 rand = "0.3.*"
 
 [lib]
