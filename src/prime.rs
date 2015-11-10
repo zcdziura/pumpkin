@@ -97,7 +97,11 @@ static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
 /// as well. `Prime`s simply claim that the number you're dealing with is a
 /// prime number.
 custom_derive! {
-    #[derive(Debug, NewtypeAdd, NewtypeSub, NewtypeMul, NewtypeDiv)]
+    #[derive(Debug,
+             NewtypeAdd, NewtypeAdd(Int),
+             NewtypeSub, NewtypeSub(Int),
+             NewtypeMul, NewtypeMul(Int),
+             NewtypeDiv, NewtypeDiv(Int))]
     pub struct Prime(Int); 
 }
 
