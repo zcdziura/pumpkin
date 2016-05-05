@@ -1,5 +1,3 @@
-use core::ops::{Add, BitAnd, Mul, Rem, Shr, Sub};
-
 use ramp::{Int, RandomInt};
 
 use rand::{OsRng, thread_rng};
@@ -108,10 +106,12 @@ custom_derive! {
 impl Prime {
     /// Constructs a new `Prime` with a size of `bit_length` bits.
     ///
-    /// The `bit_length` must be at least 2. While it doesn't make much sense
-    /// to only generate a 2-bit random number, them's the rules.
+    /// This will initialize an `OsRng` instance and call the
+    /// `Prime::from_rng()` method.
+    ///
+    /// Note: the `bit_length` MUST be at least 512-bits.
     pub fn new(bit_length: usize) -> Prime {
-        debug_assert!(bit_length >= 2);
+        debug_assert!(bit_length >= 512);
         let mut rngesus = match OsRng::new() {
             Ok(rng) => rng,
             Err(reason) => panic!("Error initializing RNG: {}", reason)
@@ -124,17 +124,42 @@ impl Prime {
     /// from an already-created `OsRng`. Not that you can **ONLY** use an
     /// `OsRng`, as it uses the operating system's secure source of entropy.
     pub fn from_rng(bit_length: usize, rngesus: &mut OsRng) -> Prime {
-        debug_assert!(bit_length >= 2);
-        let one = Int::one();
-        let two = &one + &one;
-        let mut candidate = rngesus.gen_uint(bit_length);
+        debug_assert!(bit_length >= 512);
+        let mut candidate: Int;
         
-        // Make sure candidate is odd before continuing...
-        if &candidate & (&one) == 0 {
-            candidate += &one;
-        }
-        while !is_prime(&candidate) {
-            candidate += &two;
+        // In order to remove as much bias from the system as possible, test
+        // 500 potential candidates at a time before re-seeding the candidate
+        // with a new random number.
+        loop {
+            let mut counter = 0;
+            let mut found_prime = true;
+            candidate = rngesus.gen_uint(bit_length);
+
+            // We first want to make sure that the candidate is in the appropriate
+            // size range before continuing. This can easily be done by setting the
+            // two most significant bits of the candidate number to 1.
+            // Note that Ints are stored in most-significant-bit format, so we
+            // will right-shift in order to set the two most significant bits.
+            candidate = &candidate | (Int::from(3) >> (bit_length - 2));
+
+            // Next, flip the least significant bit to 1, to make sure the candidate
+            // is odd (no sense in testing primality on an even number, after all).
+            candidate = &candidate | 1_usize;
+
+            // Now run through the actual primality check!
+            while !is_prime(&candidate) {
+                candidate += 2_usize;
+                counter += 1;
+
+                if counter > 499 {
+                    found_prime = false;
+                    break;
+                }
+            }
+
+            if found_prime {
+                break;
+            }
         }
 
         Prime(candidate)
@@ -152,13 +177,12 @@ fn is_prime(candidate: &Int) -> bool {
     // First, iterate through the array of small primes and divide the
     // candidate. If the candidate divides any of them, then we know the number
     // is a multiple of that prime; that is, the candidate is composite.
-    let zero = Int::zero();
 
     for p in SMALL_PRIMES.into_iter() {
         let prime: Int = Int::from(*p);
         let (_, r) = candidate.divmod(&prime);
 
-        if r != zero {
+        if r != 0_usize {
             continue;
         } else {
             return false;
@@ -181,12 +205,11 @@ fn is_prime(candidate: &Int) -> bool {
 fn fermat(candidate: &Int) -> bool {
     // Perform Fermat's little theorem on the candidate to determine probable
     // primality.
-    let one = Int::one();
-    let random = thread_rng().gen_int_range(&one, candidate);
+    let random = thread_rng().gen_int_range(&Int::one(), candidate);
 
-    let result = mod_exp(&random, &candidate.sub(&one), candidate);
+    let result = mod_exp(&random, &(candidate - 1_usize), candidate);
 
-    if result == one {
+    if result == 1_usize {
         true
     } else {
         false
@@ -196,21 +219,19 @@ fn fermat(candidate: &Int) -> bool {
 fn miller_rabin(candidate: &Int) -> bool {
     // Perform five iterations of the Miller-Rabin test on the candidate.
     let (s, d) = rewrite(candidate);
-    let one = Int::one();
-    let two = (&one).add(&one);
 
     for _ in 0..5 {
-        let basis = thread_rng().gen_int_range(&two, candidate);
+        let basis = thread_rng().gen_int_range(&Int::from(2), candidate);
         let mut x = mod_exp(&basis, &d, candidate);
 
-        if x.eq(&one) || x.eq(&(candidate.sub(&one))) {
+        if x == 1_usize || x == (candidate - 1_usize) {
             continue;
         } else {
-            for _ in one.clone() .. s.sub(&one) {
-                x = mod_exp(&x, &two, candidate);
-                if x == one.clone() {
+            for _ in Int::one() .. s - 1_usize {
+                x = mod_exp(&x, &Int::from(2), candidate);
+                if x == 1_usize {
                     return false;
-                } else if x == (candidate.sub(&one)) {
+                } else if x == candidate - 1_usize {
                     break;
                 }
             }
@@ -222,32 +243,29 @@ fn miller_rabin(candidate: &Int) -> bool {
 }
 
 fn mod_exp(base: &Int, exponent: &Int, modulus: &Int) -> Int {
-    let (zero, one) = (Int::zero(), Int::one());
-    let mut result = one.clone();
+    let mut result = Int::one();
     let mut base = base.clone();
     let mut exponent = exponent.clone();
 
-    while &exponent > &zero {
-        if (&exponent).bitand(&one) == (one.clone()) {
-            result = ((&result).mul(&base)).rem(modulus);
+    while exponent > 0_usize {
+        if &exponent & 1_usize == 1_usize {
+            result = (&base * result) % modulus;
         }
 
-        base = ((&base).mul(&base)).rem(modulus);
-        exponent = exponent.clone().shr(1);
+        base = (&base.pow(2)) % modulus;
+        exponent = &exponent >> 1;
     }
 
     result
 }
 
 fn rewrite(candidate: &Int) -> (Int, Int) {
-    let one = Int::one();
-
-    let mut d = candidate.sub(&one);
+    let mut d = candidate - 1_usize;
     let mut s = Int::zero();
 
-    while (&d).bitand(&one) == one {
-        d = d.clone().shr(1);
-        s = (&s).add(&one);
+    while &d & 1 == 1_usize {
+        d = &d >> 1_usize;
+        s = &s + 1_usize;
     }
 
     (s, d)
