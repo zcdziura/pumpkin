@@ -7,9 +7,9 @@ pip install 'travis-cargo<0.2' -- user &&
 export PATH = $HOME/.local/bin:$PATH
 script:
 - |
-travis-cargo build &&
-travis-cargo test &&
-travis-cargo bench
+  travis-cargo build &&
+  travis-cargo test &&
+  travis-cargo bench
 addons:
   apt:
     packages:
