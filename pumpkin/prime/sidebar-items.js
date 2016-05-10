@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Prime","A cryptographically secure prime number."]]});

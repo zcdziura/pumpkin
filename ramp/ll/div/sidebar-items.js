@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["divrem","Divides {np, ns} by {dp, ds}. If ns <= ds, the quotient is stored in {qp, 1}, otherwise the quotient is stored to {qp, (ns - ds) + 1}. The remainder is always stored to {rp, ds}."],["divrem_1","Divides the `xs` least-significant limbs at `xp` by `d`, storing the result in {qp, qxn + xs}."],["divrem_2",""]]});
