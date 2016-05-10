@@ -121,7 +121,11 @@
 <span id="77">77</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>test</span>)]</span>
-<span class='comment'>//#![deny(missing_docs)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>missing_docs</span>, <span class='ident'>missing_debug_implementations</span>,
+    <span class='ident'>missing_copy_implementations</span>, <span class='ident'>trivial_casts</span>, <span class='ident'>trivial_numeric_casts</span>,
+    <span class='ident'>unsafe_code</span>, <span class='ident'>unused_import_braces</span>, <span class='ident'>unused_qualifications</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;dev&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;dev&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>clippy</span>))]</span>
 
 <span class='doccomment'>//! A crate for generating large, cryptographically secure prime numbers.</span>
 <span class='doccomment'>//! `Primes` are seeded from the operating system&#39;s main source of entropy,</span>
@@ -147,8 +151,10 @@
 <span class='doccomment'>//! }</span>
 <span class='doccomment'>//! ```</span>
 
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>custom_derive</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>newtype_derive</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>custom_derive</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>newtype_derive</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>ramp</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
@@ -171,28 +177,22 @@
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='attribute'>#[<span class='ident'>should_panic</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_new_small_prime_from_rng</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rngesus</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>OsRng</span>::<span class='ident'>new</span>() {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>rng</span>) <span class='op'>=&gt;</span> <span class='ident'>rng</span>,
-            <span class='prelude-val'>Err</span>(<span class='ident'>reason</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;An error occurred when initializing the RNG: {}&quot;</span>, <span class='ident'>reason</span>)
-        };
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rngesus</span> <span class='op'>=</span> <span class='ident'>OsRng</span>::<span class='ident'>new</span>().<span class='ident'>unwrap</span>();
 
         <span class='ident'>Prime</span>::<span class='ident'>from_rng</span>(<span class='number'>511</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>rngesus</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='attribute'>#[<span class='ident'>ignore</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>bench_generate_512_bit_prime</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
         <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> <span class='ident'>Prime</span>::<span class='ident'>new</span>(<span class='number'>512</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='attribute'>#[<span class='ident'>ignore</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>bench_generate_1024_bit_prime</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
         <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> <span class='ident'>Prime</span>::<span class='ident'>new</span>(<span class='number'>1024</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>bench</span>]</span>
-    <span class='attribute'>#[<span class='ident'>ignore</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>bench_generate_2048_bit_prime</span>(<span class='ident'>b</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Bencher</span>) {
         <span class='ident'>b</span>.<span class='ident'>iter</span>(<span class='op'>||</span> <span class='ident'>Prime</span>::<span class='ident'>new</span>(<span class='number'>2048</span>));
     }
