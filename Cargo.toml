@@ -6,8 +6,10 @@ description = "A cryptographically secure prime number generator"
 repository = "https://github.com/zcdziura/pumpkin"
 keywords = ["prime", "number", "cryptography", "generator"]
 license = "Unlicense/MIT"
+readme = "README.md"
 
 [dependencies]
+clippy = {version = "0.0.*", optional = true}
 custom_derive = "0.1.*"
 newtype_derive = "0.1.*"
 ramp = "0.2.*"
@@ -19,4 +21,5 @@ path = "src/lib.rs"
 doctest = false
 
 [features]
+dev = ["clippy"]
 unstable = []
