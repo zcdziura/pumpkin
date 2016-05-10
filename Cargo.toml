@@ -1,6 +1,6 @@
 [package]
 name = "pumpkin"
-version = "0.3.0"
+version = "1.0.0"
 authors = ["Zach Dziura <zcdziura@gmail.com>"]
 description = "A cryptographically secure prime number generator"
 repository = "https://github.com/zcdziura/pumpkin"
