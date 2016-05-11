@@ -60,6 +60,11 @@ mod tests {
         Prime::from_rng(511, &mut rngesus);
     }
 
+    #[test]
+    fn test_should_destructure() {
+        let Prime(n) = Prime::new(512);
+    }
+
     #[bench]
     fn bench_generate_512_bit_prime(b: &mut Bencher) {
         b.iter(|| Prime::new(512));

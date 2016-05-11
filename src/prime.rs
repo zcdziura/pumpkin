@@ -137,7 +137,7 @@ custom_derive! {
         NewtypeBitAnd(Int), NewtypeBitOr, NewtypeBitOr(Int), NewtypeBitXor,
         NewtypeBitXor(Int)
     )]
-    pub struct Prime(Int);
+    pub struct Prime(pub Int);
 }
 
 impl Prime {
