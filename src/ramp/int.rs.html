@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `C:\Users\zcdziura\.cargo\registry\src\github.com-88ac128001ac3a9a\ramp-0.2.4\src\int.rs`.">
+    <meta name="description" content="Source to the Rust file `C:/Users/zcdziura/.multirust/toolchains/nightly/cargo\registry\src\github.com-1ecc6299db9ec823\ramp-0.2.4\src\int.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>int.rs.html -- source</title>
@@ -5443,10 +5443,10 @@
      * the capacity and that the most significant limb is non-zero
      */</span>
     <span class='kw'>fn</span> <span class='ident'>well_formed</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='boolval'>true</span>; }
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='boolvalue'>true</span>; }
 
         <span class='kw'>if</span> (<span class='self'>self</span>.<span class='ident'>abs_size</span>() <span class='kw'>as</span> <span class='ident'>u32</span>) <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>cap</span> {
-            <span class='kw'>return</span> <span class='boolval'>false</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>false</span>;
         }
 
         <span class='kw'>let</span> <span class='ident'>high_limb</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
@@ -5573,7 +5573,7 @@
                 <span class='ident'>ll</span>::<span class='ident'>cmp</span>(<span class='self'>self</span>.<span class='ident'>limbs</span>(), <span class='ident'>other</span>.<span class='ident'>limbs</span>(), <span class='self'>self</span>.<span class='ident'>abs_size</span>()) <span class='op'>==</span> <span class='ident'>Ordering</span>::<span class='ident'>Equal</span>
             }
         } <span class='kw'>else</span> {
-            <span class='boolval'>false</span>
+            <span class='boolvalue'>false</span>
         }
     }
 }
@@ -5582,7 +5582,7 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Limb</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>other</span> <span class='op'>==</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>true</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>true</span>;
         }
 
         <span class='self'>self</span>.<span class='ident'>size</span> <span class='op'>==</span> <span class='number'>1</span> <span class='op'>&amp;&amp;</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>limbs</span>() <span class='op'>==</span> <span class='op'>*</span><span class='ident'>other</span>
@@ -5981,10 +5981,10 @@
                     }
                     <span class='ident'>Ordering</span>::<span class='ident'>Less</span> <span class='op'>=&gt;</span> {
                         <span class='self'>self</span>.<span class='ident'>ensure_capacity</span>(<span class='ident'>other</span>.<span class='ident'>abs_size</span>() <span class='kw'>as</span> <span class='ident'>u32</span>);
-                        (<span class='ident'>other</span>.<span class='ident'>limbs</span>(), <span class='ident'>other</span>.<span class='ident'>size</span>, <span class='self'>self</span>.<span class='ident'>limbs</span>(), <span class='self'>self</span>.<span class='ident'>size</span>, <span class='boolval'>true</span>)
+                        (<span class='ident'>other</span>.<span class='ident'>limbs</span>(), <span class='ident'>other</span>.<span class='ident'>size</span>, <span class='self'>self</span>.<span class='ident'>limbs</span>(), <span class='self'>self</span>.<span class='ident'>size</span>, <span class='boolvalue'>true</span>)
                     }
                     <span class='ident'>Ordering</span>::<span class='ident'>Greater</span> <span class='op'>=&gt;</span>
-                        (<span class='self'>self</span>.<span class='ident'>limbs</span>(), <span class='self'>self</span>.<span class='ident'>size</span>, <span class='ident'>other</span>.<span class='ident'>limbs</span>(), <span class='ident'>other</span>.<span class='ident'>size</span>, <span class='boolval'>false</span>)
+                        (<span class='self'>self</span>.<span class='ident'>limbs</span>(), <span class='self'>self</span>.<span class='ident'>size</span>, <span class='ident'>other</span>.<span class='ident'>limbs</span>(), <span class='ident'>other</span>.<span class='ident'>size</span>, <span class='boolvalue'>false</span>)
                 };
 
                 <span class='comment'>// Fetch the pointer first to make completely sure the compiler</span>
@@ -6744,7 +6744,7 @@
                     <span class='ident'>ll</span>::<span class='ident'>not</span>(<span class='ident'>ptr</span>, <span class='ident'>ptr</span>.<span class='ident'>as_const</span>(), <span class='ident'>max_size</span> <span class='op'>-</span> <span class='ident'>min_size</span>);
                 }
                 ((<span class='ident'>a_sign</span> <span class='op'>&lt;</span> <span class='number'>0</span>) <span class='op'>^</span> (<span class='ident'>b_sign</span> <span class='op'>&lt;</span> <span class='number'>0</span>),
-                 <span class='boolval'>true</span>)
+                 <span class='boolvalue'>true</span>)
             }
         };
 
@@ -6816,7 +6816,7 @@
                         <span class='ident'>ll</span>::<span class='ident'>not</span>(<span class='ident'>ptr</span>, <span class='ident'>ptr</span>.<span class='ident'>as_const</span>(), <span class='ident'>max_size</span> <span class='op'>-</span> <span class='ident'>min_size</span>);
                     }
                     ((<span class='ident'>a_sign</span> <span class='op'>&lt;</span> <span class='number'>0</span>) <span class='op'>^</span> (<span class='ident'>b_sign</span> <span class='op'>&lt;</span> <span class='number'>0</span>),
-                     <span class='boolval'>true</span>)
+                     <span class='boolvalue'>true</span>)
                 }
             };
             <span class='ident'>a</span>.<span class='ident'>size</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>use_max_size</span> {
@@ -6843,7 +6843,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>BitAndAssign</span><span class='op'>&lt;</span><span class='ident'>Limb</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
     <span class='kw'>fn</span> <span class='ident'>bitand_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Limb</span>) {
-        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
+        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
     }
 }
 
@@ -6919,7 +6919,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>BitOrAssign</span><span class='op'>&lt;</span><span class='ident'>Limb</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
     <span class='kw'>fn</span> <span class='ident'>bitor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Limb</span>) {
-        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
+        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
     }
 }
 
@@ -6996,7 +6996,7 @@
 
 <span class='kw'>impl</span> <span class='ident'>BitXorAssign</span><span class='op'>&lt;</span><span class='ident'>Limb</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
     <span class='kw'>fn</span> <span class='ident'>bitxor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Limb</span>) {
-        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
+        <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
     }
 }
 
@@ -7203,21 +7203,21 @@
         <span class='kw'>impl</span> <span class='ident'>BitAndAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitand_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
             }
         }
 
         <span class='kw'>impl</span> <span class='ident'>BitOrAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
             }
         }
 
         <span class='kw'>impl</span> <span class='ident'>BitXorAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitxor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>true</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
             }
         }
 
@@ -7346,21 +7346,21 @@
         <span class='kw'>impl</span> <span class='ident'>BitAndAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitand_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>And</span>)
             }
         }
 
         <span class='kw'>impl</span> <span class='ident'>BitOrAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Or</span>)
             }
         }
 
         <span class='kw'>impl</span> <span class='ident'>BitXorAssign</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
             <span class='attribute'>#[<span class='ident'>inline</span>]</span>
             <span class='kw'>fn</span> <span class='ident'>bitxor_assign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>) {
-                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolval'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
+                <span class='ident'>bitop_limb</span>(<span class='self'>self</span>, <span class='ident'>Limb</span>(<span class='ident'>other</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>), <span class='boolvalue'>false</span>, <span class='ident'>BitOp</span>::<span class='ident'>Xor</span>)
             }
         }
 
@@ -7673,13 +7673,13 @@
         }
         <span class='comment'>// Differing signs</span>
         <span class='kw'>if</span> <span class='ident'>sign</span> <span class='op'>&lt;</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>other</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>||</span> <span class='ident'>sign</span> <span class='op'>&gt;</span> <span class='number'>0</span> <span class='op'>&amp;&amp;</span> <span class='ident'>other</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>false</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>false</span>;
         }
 
         <span class='comment'>// We can&#39;t fall back to the `== Limb` impl when self is negative</span>
         <span class='comment'>// since it&#39;ll fail because of signs</span>
         <span class='kw'>if</span> <span class='ident'>sign</span> <span class='op'>&lt;</span> <span class='number'>0</span> {
-            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>abs_size</span>() <span class='op'>&gt;</span> <span class='number'>1</span> { <span class='kw'>return</span> <span class='boolval'>false</span>; }
+            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>abs_size</span>() <span class='op'>&gt;</span> <span class='number'>1</span> { <span class='kw'>return</span> <span class='boolvalue'>false</span>; }
             <span class='kw'>return</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>limbs</span>() <span class='op'>==</span> (<span class='ident'>other</span>.<span class='ident'>abs</span>() <span class='kw'>as</span> <span class='ident'>BaseInt</span>);
         }
 
@@ -7774,10 +7774,10 @@
 <span class='kw'>fn</span> <span class='ident'>eq_64</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='ident'>Int</span>, <span class='ident'>mag</span>: <span class='ident'>u64</span>, <span class='ident'>neg</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='kw'>let</span> <span class='ident'>sign</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>mag</span> <span class='op'>==</span> <span class='number'>0</span> { <span class='number'>0</span> } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>neg</span> { <span class='op'>-</span><span class='number'>1</span> } <span class='kw'>else</span> { <span class='number'>1</span> };
     <span class='kw'>if</span> <span class='ident'>x</span>.<span class='ident'>sign</span>() <span class='op'>!=</span> <span class='ident'>sign</span> {
-        <span class='kw'>return</span> <span class='boolval'>false</span>
+        <span class='kw'>return</span> <span class='boolvalue'>false</span>
     } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>mag</span> <span class='op'>==</span> <span class='number'>0</span> {
         <span class='comment'>// we&#39;re guaranteed to have x == 0 since the signs match</span>
-        <span class='kw'>return</span> <span class='boolval'>true</span>
+        <span class='kw'>return</span> <span class='boolvalue'>true</span>
     }
 
 
@@ -7798,7 +7798,7 @@
             <span class='ident'>hi_limb</span>.<span class='number'>0</span> <span class='op'>==</span> (<span class='ident'>mag</span> <span class='op'>&gt;&gt;</span> <span class='number'>32</span>) <span class='kw'>as</span> <span class='ident'>BaseInt</span>
                 <span class='op'>&amp;&amp;</span> <span class='ident'>lo_limb</span>.<span class='number'>0</span> <span class='op'>==</span> <span class='ident'>mag</span> <span class='kw'>as</span> <span class='ident'>BaseInt</span>
         } <span class='kw'>else</span> {
-            <span class='boolval'>false</span>
+            <span class='boolvalue'>false</span>
         }
     }
 }
@@ -7841,25 +7841,25 @@
 
 <span class='kw'>impl</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
     <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>eq_64</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolval'>false</span>)
+        <span class='ident'>eq_64</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolvalue'>false</span>)
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>Int</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>u64</span> {
     <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Int</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>eq_64</span>(<span class='ident'>other</span>, <span class='op'>*</span><span class='self'>self</span>, <span class='boolval'>false</span>)
+        <span class='ident'>eq_64</span>(<span class='ident'>other</span>, <span class='op'>*</span><span class='self'>self</span>, <span class='boolvalue'>false</span>)
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Int</span> {
     <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Some</span>(<span class='ident'>cmp_64</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolval'>false</span>))
+        <span class='prelude-val'>Some</span>(<span class='ident'>cmp_64</span>(<span class='self'>self</span>, <span class='ident'>other</span>, <span class='boolvalue'>false</span>))
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>Int</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>u64</span> {
     <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Int</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Some</span>(<span class='ident'>cmp_64</span>(<span class='ident'>other</span>, <span class='op'>*</span><span class='self'>self</span>, <span class='boolval'>false</span>).<span class='ident'>reverse</span>())
+        <span class='prelude-val'>Some</span>(<span class='ident'>cmp_64</span>(<span class='ident'>other</span>, <span class='op'>*</span><span class='self'>self</span>, <span class='boolvalue'>false</span>).<span class='ident'>reverse</span>())
     }
 }
 
@@ -7985,7 +7985,7 @@
     };
 
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>:<span class='ident'>path</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>radix</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prefix</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>radix</span>, <span class='boolval'>false</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prefix</span>);
+        <span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>radix</span>, <span class='boolvalue'>false</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>prefix</span>);
     }
 );
 
@@ -7993,8 +7993,8 @@
 <span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>Octal</span>,     <span class='number'>8</span>, <span class='string'>&quot;0o&quot;</span>);
 <span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>Display</span>,  <span class='number'>10</span>, <span class='string'>&quot;&quot;</span>);
 <span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>Debug</span>,    <span class='number'>10</span>, <span class='string'>&quot;&quot;</span>);
-<span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>LowerHex</span>, <span class='number'>16</span>, <span class='boolval'>false</span>, <span class='string'>&quot;0x&quot;</span>);
-<span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>UpperHex</span>, <span class='number'>16</span>, <span class='boolval'>true</span>, <span class='string'>&quot;0x&quot;</span>);
+<span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>LowerHex</span>, <span class='number'>16</span>, <span class='boolvalue'>false</span>, <span class='string'>&quot;0x&quot;</span>);
+<span class='macro'>impl_fmt</span><span class='macro'>!</span>(<span class='ident'>fmt</span>::<span class='ident'>UpperHex</span>, <span class='number'>16</span>, <span class='boolvalue'>true</span>, <span class='string'>&quot;0x&quot;</span>);
 
 <span class='comment'>// String parsing</span>
 
@@ -8326,7 +8326,7 @@
         ];
 
         <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='ident'>s</span>, <span class='kw-2'>ref</span> <span class='ident'>n</span>) <span class='kw'>in</span> <span class='ident'>cases</span>.<span class='ident'>iter</span>() {
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='kw-2'>&amp;</span><span class='ident'>n</span>.<span class='ident'>to_str_radix</span>(<span class='number'>16</span>, <span class='boolval'>false</span>));
+            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='kw-2'>&amp;</span><span class='ident'>n</span>.<span class='ident'>to_str_radix</span>(<span class='number'>16</span>, <span class='boolvalue'>false</span>));
         }
     }
 
@@ -8634,10 +8634,10 @@
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>is_even</span>() {
         <span class='kw'>let</span> <span class='ident'>cases</span> <span class='op'>=</span> [
-            (<span class='string'>&quot;0&quot;</span>, <span class='boolval'>true</span>),
-            (<span class='string'>&quot;1&quot;</span>, <span class='boolval'>false</span>),
-            (<span class='string'>&quot;47398217493274092174042109472&quot;</span>, <span class='boolval'>true</span>),
-            (<span class='string'>&quot;47398217493274092174042109471&quot;</span>, <span class='boolval'>false</span>),
+            (<span class='string'>&quot;0&quot;</span>, <span class='boolvalue'>true</span>),
+            (<span class='string'>&quot;1&quot;</span>, <span class='boolvalue'>false</span>),
+            (<span class='string'>&quot;47398217493274092174042109472&quot;</span>, <span class='boolvalue'>true</span>),
+            (<span class='string'>&quot;47398217493274092174042109471&quot;</span>, <span class='boolvalue'>false</span>),
         ];
 
         <span class='kw'>for</span> <span class='kw-2'>&amp;</span>(<span class='ident'>v</span>, <span class='ident'>even</span>) <span class='kw'>in</span> <span class='ident'>cases</span>.<span class='ident'>iter</span>() {

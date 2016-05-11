@@ -508,7 +508,7 @@
         <span class='ident'>NewtypeBitAnd</span>(<span class='ident'>Int</span>), <span class='ident'>NewtypeBitOr</span>, <span class='ident'>NewtypeBitOr</span>(<span class='ident'>Int</span>), <span class='ident'>NewtypeBitXor</span>,
         <span class='ident'>NewtypeBitXor</span>(<span class='ident'>Int</span>)
     )]</span>
-    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Prime</span>(<span class='ident'>Int</span>);
+    <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Prime</span>(<span class='kw'>pub</span> <span class='ident'>Int</span>);
 }
 
 <span class='kw'>impl</span> <span class='ident'>Prime</span> {
@@ -540,7 +540,7 @@
         <span class='comment'>// with a new random number.</span>
         <span class='kw'>loop</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>counter</span> <span class='op'>=</span> <span class='number'>0</span>;
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found_prime</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found_prime</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
             <span class='ident'>candidate</span> <span class='op'>=</span> <span class='ident'>rngesus</span>.<span class='ident'>gen_uint</span>(<span class='ident'>bit_length</span>);
 
             <span class='comment'>// We first want to make sure that the candidate is in the appropriate</span>
@@ -560,7 +560,7 @@
                 <span class='ident'>counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
 
                 <span class='kw'>if</span> <span class='ident'>counter</span> <span class='op'>&gt;</span> <span class='number'>499</span> {
-                    <span class='ident'>found_prime</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                    <span class='ident'>found_prime</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                     <span class='kw'>break</span>;
                 }
             }
@@ -615,21 +615,21 @@
         <span class='kw'>if</span> <span class='ident'>r</span> <span class='op'>!=</span> <span class='number'>0_usize</span> {
             <span class='kw'>continue</span>;
         } <span class='kw'>else</span> {
-            <span class='kw'>return</span> <span class='boolval'>false</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>false</span>;
         }
     }
 
     <span class='comment'>// Second, do a Fermat test on the candidate</span>
     <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>fermat</span>(<span class='ident'>candidate</span>) {
-        <span class='kw'>return</span> <span class='boolval'>false</span>;
+        <span class='kw'>return</span> <span class='boolvalue'>false</span>;
     }
 
     <span class='comment'>// Finally, do a Miller-Rabin test</span>
     <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>miller_rabin</span>(<span class='ident'>candidate</span>) {
-        <span class='kw'>return</span> <span class='boolval'>false</span>;
+        <span class='kw'>return</span> <span class='boolvalue'>false</span>;
     }
 
-    <span class='boolval'>true</span>
+    <span class='boolvalue'>true</span>
 }
 
 <span class='kw'>fn</span> <span class='ident'>fermat</span>(<span class='ident'>candidate</span>: <span class='kw-2'>&amp;</span><span class='ident'>Int</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
@@ -656,16 +656,16 @@
             <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='ident'>Int</span>::<span class='ident'>one</span>()..<span class='ident'>s</span> <span class='op'>-</span> <span class='number'>1_usize</span> {
                 <span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>mod_exp</span>(<span class='kw-2'>&amp;</span><span class='ident'>x</span>, <span class='kw-2'>&amp;</span><span class='ident'>Int</span>::<span class='ident'>from</span>(<span class='number'>2</span>), <span class='ident'>candidate</span>);
                 <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>==</span> <span class='number'>1_usize</span> {
-                    <span class='kw'>return</span> <span class='boolval'>false</span>;
+                    <span class='kw'>return</span> <span class='boolvalue'>false</span>;
                 } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>==</span> <span class='ident'>candidate</span> <span class='op'>-</span> <span class='number'>1_usize</span> {
                     <span class='kw'>break</span>;
                 }
             }
-            <span class='kw'>return</span> <span class='boolval'>false</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>false</span>;
         }
     }
 
-    <span class='boolval'>true</span>
+    <span class='boolvalue'>true</span>
 }
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>

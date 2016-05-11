@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `C:\Users\zcdziura\.cargo\registry\src\github.com-88ac128001ac3a9a\ramp-0.2.4\src\ll/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `C:/Users/zcdziura/.multirust/toolchains/nightly/cargo\registry\src\github.com-1ecc6299db9ec823\ramp-0.2.4\src\ll/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -981,11 +981,11 @@
  */</span>
 <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>is_zero</span>(<span class='kw-2'>mut</span> <span class='ident'>np</span>: <span class='ident'>Limbs</span>, <span class='kw-2'>mut</span> <span class='ident'>nn</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='kw'>while</span> <span class='ident'>nn</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-        <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>np</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='boolval'>false</span>; }
+        <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>np</span> <span class='op'>!=</span> <span class='number'>0</span> { <span class='kw'>return</span> <span class='boolvalue'>false</span>; }
         <span class='ident'>np</span> <span class='op'>=</span> <span class='ident'>np</span>.<span class='ident'>offset</span>(<span class='number'>1</span>);
         <span class='ident'>nn</span> <span class='op'>-=</span> <span class='number'>1</span>;
     }
-    <span class='kw'>return</span> <span class='boolval'>true</span>;
+    <span class='kw'>return</span> <span class='boolvalue'>true</span>;
 }
 
 <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>zero</span>(<span class='kw-2'>mut</span> <span class='ident'>np</span>: <span class='ident'>LimbsMut</span>, <span class='kw-2'>mut</span> <span class='ident'>nn</span>: <span class='ident'>i32</span>) {

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `C:\Users\zcdziura\.cargo\registry\src\github.com-88ac128001ac3a9a\ramp-0.2.4\src\ll\limb_ptr.rs`.">
+    <meta name="description" content="Source to the Rust file `C:/Users/zcdziura/.multirust/toolchains/nightly/cargo\registry\src\github.com-1ecc6299db9ec823\ramp-0.2.4\src\ll\limb_ptr.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>limb_ptr.rs.html -- source</title>
@@ -349,9 +349,9 @@
 <span class='kw'>impl</span> <span class='ident'>Bounds</span> {
     <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>_ptr</span>: <span class='ident'>usize</span>, <span class='ident'>_start</span>: <span class='ident'>i32</span>, <span class='ident'>_end</span>: <span class='ident'>i32</span>) <span class='op'>-&gt;</span> <span class='ident'>Bounds</span> { <span class='ident'>Bounds</span> }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>can_deref</span>(<span class='self'>self</span>, <span class='ident'>_ptr</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>true</span> }
+    <span class='kw'>fn</span> <span class='ident'>can_deref</span>(<span class='self'>self</span>, <span class='ident'>_ptr</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolvalue'>true</span> }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>offset_valid</span>(<span class='self'>self</span>, <span class='ident'>_ptr</span>: <span class='ident'>usize</span>, <span class='ident'>_offset</span>: <span class='ident'>isize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>true</span> }
+    <span class='kw'>fn</span> <span class='ident'>offset_valid</span>(<span class='self'>self</span>, <span class='ident'>_ptr</span>: <span class='ident'>usize</span>, <span class='ident'>_offset</span>: <span class='ident'>isize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolvalue'>true</span> }
 }
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>Bounds</span> {
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>debug_assertions</span>)]</span>
