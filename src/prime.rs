@@ -203,6 +203,72 @@ impl Prime {
     }
 }
 
+/// An arbitrarily-length safe prime number, suitable for cryptographic purposes.
+///
+/// A safe prime is a prime of the form `p = 2q + 1`, where `q` is also prime.
+///
+/// `SafePrime`s are constructed using similar methods as those in `Prime`. An
+/// extra iterative check is constructed on each generated `Prime` to ensure it
+/// satisfies the safe prime condition. As a result, generation of `SafePrime`s
+/// can be quite slow, and should only be used if absolutely necessary.
+custom_derive! {
+    /// A cryptographically secure prime number.
+    #[derive(NewtypeDebug, NewtypeDisplay, NewtypeBinary, NewtypeOctal,
+        NewtypeLowerHex, NewtypeUpperHex, NewtypeAdd, NewtypeAdd(Int),
+        NewtypeSub, NewtypeSub(Int), NewtypeMul, NewtypeMul(Int), NewtypeDiv,
+        NewtypeDiv(Int), NewtypeRem, NewtypeRem(Int), NewtypeBitAnd,
+        NewtypeBitAnd(Int), NewtypeBitOr, NewtypeBitOr(Int), NewtypeBitXor,
+        NewtypeBitXor(Int)
+    )]
+    pub struct SafePrime(pub Int);
+}
+
+impl SafePrime {
+    /// Constructs a new `SafePrime` with a size of `bit_length` bits.
+    ///
+    /// This will initialize an `OsRng` instance and call the
+    /// `SafePrime::from_rng()` method.
+    ///
+    /// Note: the `bit_length` MUST be at least 512-bits.
+    pub fn new(bit_length: usize) -> SafePrime {
+        debug_assert!(bit_length >= 512);
+        let mut rngesus = match OsRng::new() {
+            Ok(rng) => rng,
+            Err(reason) => panic!("Error initializing RNG: {}", reason),
+        };
+
+        SafePrime::from_rng(bit_length, &mut rngesus)
+    }
+
+    /// Constructs a new `SafePrime` with the size of `bit_length` bits, sourced
+    /// from an already-created `OsRng`. Not that you can **ONLY** use an
+    /// `OsRng`, as it uses the operating system's secure source of entropy.
+    pub fn from_rng(bit_length: usize, mut rngesus: &mut OsRng) -> SafePrime {
+        debug_assert!(bit_length >= 512);
+        let mut candidate: Int;
+
+        // Circumvent uninitialized warning (technically valid but compiler
+        // cannot determine that `clone_from` will fill the value.
+        let mut candidate_p: Int = Int::zero();
+
+        loop {
+            candidate = match Prime::from_rng(bit_length, &mut rngesus) {
+                Prime(inner) => inner
+            };
+
+            candidate_p.clone_from(&candidate);
+            candidate_p -= &Int::one();
+            candidate_p /= &Int::from(2);
+
+            if is_prime(&candidate_p) {
+                break;
+            }
+        }
+
+        SafePrime(candidate)
+    }
+}
+
 fn mod_exp(base: &Int, exponent: &Int, modulus: &Int) -> Int {
     let mut result = Int::one();
     let mut base = base.clone();
