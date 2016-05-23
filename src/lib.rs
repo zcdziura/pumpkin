@@ -39,6 +39,7 @@ extern crate test;
 
 mod prime;
 pub use prime::Prime;
+pub use prime::SafePrime;
 
 #[cfg(test)]
 mod tests {
