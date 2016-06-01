@@ -6,23 +6,39 @@
 #![cfg_attr(feature = "dev", plugin(clippy))]
 
 //! A crate for generating large, cryptographically secure prime numbers.
-//! `Primes` are seeded from the operating system's main source of entropy,
-//! ensuring proper randomness.
+//! These numbers are seeded from the operating system's main source of
+//! entropy, ensuring proper randomness.
 //!
-//! `Primes` must be AT LEAST 512-bits long. Attempting to generate a `Prime`
-//! less than 512-bits long will cause a panic.
+//! Numbers are verified to be prime by running the following three tests
+//! during initialization:
+//!
+//! 1. Dividing the initial prime number candidate by the first 1,000 prime
+//! numbers, checking the remainder. Should the remainder ever be zero, then
+//! add two to the candidate and try again.
+//!
+//! 2. Run a Fermat Primality Test on the candidate. If it doesn't pass, add
+//! two to the candidate and goto Step 1.
+//!
+//! 3. Finally, complete five rounds of the Miller-Rabin Primality Test.
+//! Should any of the tests pass, add two to the candidate and goto Step 1.
+//!
+//! The preceding steps mirror those used by GnuPG, a leading PGP implementation
+//! used by thousands of users all across the world.
+//!
+//! The prime numbers must be AT LEAST 512-bits long. Attempting to generate a
+//! number less than 512-bits long will cause a panic.
 //!
 //! ## Example
 //!
 //! ```
 //! extern crate pumpkin;
 //!
-//! use pumpkin::Prime;
+//! use pumpkin::prime;
 //!
 //! fn main() {
-//!     // Generate 2048-bit primes
-//!     let p = Prime::new(2048);
-//!     let q = Prime::new(2048);
+//!     // Generate 2, 2048-bit primes
+//!     let p = prime::new(2048);
+//!     let q = prime::new(2048);
 //!
 //!     let n = p * q;
 //!     println!("{}", n); // Some 4096-bit composite number
@@ -37,47 +53,50 @@ extern crate ramp;
 extern crate rand;
 extern crate test;
 
-mod prime;
-pub use prime::Prime;
-pub use prime::SafePrime;
+mod common;
+pub mod prime;
+pub mod safe_prime;
 
 #[cfg(test)]
 mod tests {
     use rand::OsRng;
-    use super::*;
+    use super::{prime, safe_prime};
     use test::Bencher;
 
     #[test]
     #[should_panic]
     fn test_new_small_prime() {
-        Prime::new(511);
+        prime::new(511);
     }
 
     #[test]
     #[should_panic]
     fn test_new_small_prime_from_rng() {
         let mut rngesus = OsRng::new().unwrap();
-
-        Prime::from_rng(511, &mut rngesus);
-    }
-
-    #[test]
-    fn test_should_destructure() {
-        let Prime(n) = Prime::new(512);
+        prime::from_rng(511, &mut rngesus);
     }
 
     #[bench]
     fn bench_generate_512_bit_prime(b: &mut Bencher) {
-        b.iter(|| Prime::new(512));
+        let mut rngesus = OsRng::new().unwrap();
+        b.iter(|| prime::from_rng(512, &mut rngesus));
     }
 
     #[bench]
     fn bench_generate_1024_bit_prime(b: &mut Bencher) {
-        b.iter(|| Prime::new(1024));
+        let mut rngesus = OsRng::new().unwrap();
+        b.iter(|| prime::from_rng(1024, &mut rngesus));
     }
 
     #[bench]
     fn bench_generate_2048_bit_prime(b: &mut Bencher) {
-        b.iter(|| Prime::new(2048));
+        let mut rngesus = OsRng::new().unwrap();
+        b.iter(|| prime::from_rng(2048, &mut rngesus));
+    }
+
+    #[bench]
+    fn bench_generate_1024_bit_safe_prime(b: &mut Bencher) {
+        let mut rngesus = OsRng::new().unwrap();
+        b.iter(|| safe_prime::from_rng(1024, &mut rngesus));
     }
 }

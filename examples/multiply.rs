@@ -1,12 +1,12 @@
 extern crate pumpkin;
 
-use pumpkin::Prime;
+use pumpkin::prime;
 
 fn main() {
-    let p = Prime::new(2048);
+    let p = prime::new(2048);
     println!("{:x}", p);
 
-    let q = Prime::new(2048);
+    let q = prime::new(2048);
     println!("\n{:x}", q);
 
     println!("\n{:X}", p * q);

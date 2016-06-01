@@ -22,7 +22,7 @@ of course your mileage may vary.
 Add the following to your `Cargo.toml` file:
 
 ```
-pumpkin = "1.0.*"
+pumpkin = "2.0.*"
 ```
 
 Note that `pumpkin` requires the `nightly` Rust compiler.
