@@ -1,6 +1,8 @@
 use ramp::{Int, RandomInt};
 use rand::{OsRng, thread_rng};
 
+use error::{Error, Result};
+
 static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
                                    61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127,
                                    131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191,
@@ -101,45 +103,46 @@ static SMALL_PRIMES: [u32; 999] = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 
 
 /// Constructs a new prime number with the size of `bit_length` bits, sourced
 /// from an already-initialized `OsRng`.
-pub fn gen_prime(bit_length: usize, rngesus: &mut OsRng) -> Int {
-    debug_assert!(bit_length >= 512);
-    let mut candidate: Int;
+pub fn gen_prime(bit_length: usize, rngesus: &mut OsRng) -> Result {
+    if bit_length < 512 {
+        Err(Error::BitLength(bit_length))
+    } else {
+        let mut candidate: Int;
 
-    // In order to remove as much bias from the system as possible, test
-    // 500 potential candidates at a time before re-seeding the candidate
-    // with a new random number.
-    loop {
-        let mut counter = 0;
-        let mut found_prime = true;
-        candidate = rngesus.gen_uint(bit_length);
+        // In order to remove as much bias from the system as possible, test
+        // 500 potential candidates at a time before re-seeding the candidate
+        // with a new random number.
+        loop {
+            let mut counter = 0;
+            let mut found_prime = true;
+            candidate = rngesus.gen_uint(bit_length);
 
-        // We first want to make sure that the candidate is in the appropriate
-        // size range before continuing. This can easily be done by setting the
-        // two most significant bits of the candidate number to 1.
-        candidate.set_bit(bit_length as u32, true);
-        candidate.set_bit((bit_length-1) as u32, true);
+            // We first want to make sure that the candidate is in the appropriate
+            // size range before continuing. This can easily be done by setting the
+            // two most significant bits of the candidate number to 1.
+            candidate.set_bit(bit_length as u32, true);
+            candidate.set_bit((bit_length-1) as u32, true);
 
-        // Next, flip the least significant bit to 1, to make sure the candidate
-        // is odd (no sense in testing primality on an even number, after all).
-        candidate.set_bit(1, true);
+            // Next, flip the least significant bit to 1, to make sure the candidate
+            // is odd (no sense in testing primality on an even number, after all).
+            candidate.set_bit(1, true);
 
-        // Now run through the actual primality check!
-        while !is_prime(&candidate) {
-            candidate += 2_usize;
-            counter += 1;
+            // Now run through the actual primality check!
+            while !is_prime(&candidate) {
+                candidate += 2_usize;
+                counter += 1;
 
-            if counter > 499 {
-                found_prime = false;
-                break;
+                if counter > 499 {
+                    found_prime = false;
+                    break;
+                }
+            }
+
+            if found_prime {
+                return Ok(candidate);
             }
         }
-
-        if found_prime {
-            break;
-        }
     }
-
-    candidate
 }
 
 /// Runs the following three tests on a given `candidate` to determine

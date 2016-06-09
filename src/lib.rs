@@ -54,6 +54,7 @@ extern crate rand;
 extern crate test;
 
 mod common;
+mod error;
 pub mod prime;
 pub mod safe_prime;
 
