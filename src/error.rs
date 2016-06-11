@@ -1,11 +1,18 @@
+//! More coming soon
+
 use ramp::Int;
 use std::{error, fmt, io, result};
 
+/// Goddamn docs
 pub type Result = result::Result<Int, Error>;
 
+/// More goddamn docs
 #[derive(Debug)]
 pub enum Error {
+    /// Docs for a variant, are you kidding me??
     OsRngInitialization(io::Error),
+
+    /// Jesus fuck, people
     BitLength(usize)
 }
 

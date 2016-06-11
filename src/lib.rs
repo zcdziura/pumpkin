@@ -54,7 +54,7 @@ extern crate rand;
 extern crate test;
 
 mod common;
-mod error;
+pub mod error;
 pub mod prime;
 pub mod safe_prime;
 
@@ -63,19 +63,6 @@ mod tests {
     use rand::OsRng;
     use super::{prime, safe_prime};
     use test::Bencher;
-
-    #[test]
-    #[should_panic]
-    fn test_new_small_prime() {
-        prime::new(511);
-    }
-
-    #[test]
-    #[should_panic]
-    fn test_new_small_prime_from_rng() {
-        let mut rngesus = OsRng::new().unwrap();
-        prime::from_rng(511, &mut rngesus);
-    }
 
     #[bench]
     fn bench_generate_512_bit_prime(b: &mut Bencher) {
@@ -96,8 +83,8 @@ mod tests {
     }
 
     #[bench]
-    fn bench_generate_1024_bit_safe_prime(b: &mut Bencher) {
+    fn bench_generate_512_bit_safe_prime(b: &mut Bencher) {
         let mut rngesus = OsRng::new().unwrap();
-        b.iter(|| safe_prime::from_rng(1024, &mut rngesus));
+        b.iter(|| safe_prime::from_rng(512, &mut rngesus));
     }
 }

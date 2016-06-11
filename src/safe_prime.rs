@@ -44,3 +44,26 @@ pub fn from_rng(bit_length: usize, mut rngesus: &mut OsRng) -> Result {
         Ok(candidate)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::new;
+
+    #[test]
+    fn test_safe_prime_bit_length_too_small() {
+        let sp = new(511);
+        assert_eq!(false, match sp {
+            Ok(_) => true,
+            Err(_) => false
+        });
+    }
+
+    #[test]
+    fn test_safe_prime() {
+        let sp = new(512);
+        assert_eq!(true, match sp {
+            Ok(_) => true,
+            Err(_) => false
+        });
+    }
+}

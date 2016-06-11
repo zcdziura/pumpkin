@@ -120,12 +120,12 @@ pub fn gen_prime(bit_length: usize, rngesus: &mut OsRng) -> Result {
             // We first want to make sure that the candidate is in the appropriate
             // size range before continuing. This can easily be done by setting the
             // two most significant bits of the candidate number to 1.
-            candidate.set_bit(bit_length as u32, true);
-            candidate.set_bit((bit_length-1) as u32, true);
+            candidate.set_bit(1, true);
+            candidate.set_bit(2, true);
 
             // Next, flip the least significant bit to 1, to make sure the candidate
             // is odd (no sense in testing primality on an even number, after all).
-            candidate.set_bit(1, true);
+            candidate.set_bit(bit_length as u32, true);
 
             // Now run through the actual primality check!
             while !is_prime(&candidate) {
@@ -199,7 +199,7 @@ fn mod_exp(base: &Int, exponent: &Int, modulus: &Int) -> Int {
     let mut exponent = exponent.clone();
 
     while exponent > 0_usize {
-        if &exponent & 1_usize == 1_usize {
+        if exponent.trailing_zeros() == 0 {
             result = (&base * result) % modulus;
         }
 
@@ -240,10 +240,46 @@ fn rewrite(candidate: &Int) -> (Int, Int) {
     let mut d = candidate - 1_usize;
     let mut s = Int::zero();
 
-    while &d & 1 == 1_usize {
+    while d.trailing_zeros() == 0 { //
         d = &d >> 1_usize;
         s = &s + 1_usize;
     }
 
     (s, d)
+}
+
+#[cfg(test)]
+mod tests {
+    extern crate ramp;
+
+    use ramp::Int;
+    use super::{fermat, miller_rabin};
+
+    #[test]
+    fn test_fermat_prime() {
+        let candidate = Int::from(65537);
+        let result = fermat(&candidate);
+        assert_eq!(result, true);
+    }
+
+    #[test]
+    fn test_fermat_not_prime() {
+        let candidate = Int::from(65535);
+        let result = fermat(&candidate);
+        assert_eq!(result, false);
+    }
+
+    #[test]
+    fn test_miller_rabin_prime() {
+        let candidate = Int::from(65537);
+        let result = miller_rabin(&candidate, 64);
+        assert_eq!(result, true);
+    }
+
+    #[test]
+    fn test_miller_rabin_not_prime() {
+        let candidate = Int::from(65535);
+        let result = miller_rabin(&candidate, 64);
+        assert_eq!(result, false);
+    }
 }
