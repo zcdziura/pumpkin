@@ -45,8 +45,10 @@
 //! }
 //! ```
 
+#[allow(unused_imports)]
 #[macro_use]
 extern crate custom_derive;
+#[allow(unused_imports)]
 #[macro_use]
 extern crate newtype_derive;
 extern crate ramp;
