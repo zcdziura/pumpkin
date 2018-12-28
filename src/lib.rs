@@ -62,7 +62,7 @@ pub mod safe_prime;
 
 #[cfg(test)]
 mod tests {
-    use rand::OsRng;
+    use rand::rngs::OsRng;
     use super::{prime, safe_prime};
     use test::Bencher;
 

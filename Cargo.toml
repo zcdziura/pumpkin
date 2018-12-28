@@ -13,8 +13,8 @@ readme = "README.md"
 clippy = {version = "0.0.*", optional = true}
 custom_derive = "0.1"
 newtype_derive = "0.1"
-ramp = "0.3"
-rand = "0.3"
+ramp = "0.5"
+rand = "0.6"
 
 [lib]
 name = "pumpkin"

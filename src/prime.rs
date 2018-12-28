@@ -1,6 +1,6 @@
 //! Generates cryptographically secure prime numbers.
 
-use rand::OsRng;
+use rand::rngs::OsRng;
 
 pub use common::gen_prime as from_rng;
 use error::{Error, Result};
@@ -15,8 +15,8 @@ pub fn new(bit_length: usize) -> Result {
     if bit_length < 512 {
         Err(Error::BitLength(bit_length))
     } else {
-        let mut rngesus = try!(OsRng::new());
-        Ok(try!(from_rng(bit_length, &mut rngesus)))
+        let mut rngesus = OsRng::new()?;
+        Ok(from_rng(bit_length, &mut rngesus)?)
     }
 }
 

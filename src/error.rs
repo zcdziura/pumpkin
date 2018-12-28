@@ -1,7 +1,9 @@
 //! More coming soon
 
 use ramp::Int;
-use std::{error, fmt, io, result};
+
+use rand;
+use std::{error, fmt, result};
 
 /// Goddamn docs
 pub type Result = result::Result<Int, Error>;
@@ -10,7 +12,7 @@ pub type Result = result::Result<Int, Error>;
 #[derive(Debug)]
 pub enum Error {
     /// Docs for a variant, are you kidding me??
-    OsRngInitialization(io::Error),
+    OsRngInitialization(rand::Error),
 
     /// Jesus fuck, people
     BitLength(usize)
@@ -46,8 +48,8 @@ impl error::Error for Error {
     }
 }
 
-impl From<io::Error> for Error {
-    fn from(err: io::Error) -> Error {
+impl From<rand::Error> for Error {
+    fn from(err: rand::Error) -> Error {
         Error::OsRngInitialization(err)
     }
 }
