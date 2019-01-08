@@ -312,6 +312,10 @@ pub fn is_prime(candidate: &Int) -> bool {
     // candidate. If the candidate divides any of them, then we know the number
     // is a multiple of that prime; that is, the candidate is composite.
 
+    if *candidate == Int::from(2) {
+        return true
+    }
+
     if !candidate.is_odd() {
         return false;
     }
@@ -321,7 +325,7 @@ pub fn is_prime(candidate: &Int) -> bool {
         let (_, r) = candidate.divmod(&prime);
 
         if r == Int::zero() {
-            return false;
+            return *candidate == prime;
         }
     }
 
