@@ -5,7 +5,7 @@ use ramp::Int;
 use rand::rngs::OsRng;
 
 pub use common::{gen_prime, is_prime};
-use common::{two, three};
+use common::{three, two};
 use error::{Error, Result};
 
 /// Constructs a new `SafePrime` with a size of `bit_length` bits.
@@ -32,7 +32,7 @@ pub fn is_safe_prime(candidate: &Int) -> bool {
             // a safe prime satisfies (p-1)/2 is prime. Since a
             // prime is odd, We just need to divide by 2
             let candidate_p = candidate >> 1;
-            return is_prime(&candidate_p)
+            return is_prime(&candidate_p);
         }
     }
     false
@@ -67,25 +67,31 @@ pub fn from_rng(bit_length: usize, mut rngesus: &mut OsRng) -> Result {
 
 #[cfg(test)]
 mod tests {
-    use super::{new, is_safe_prime};
+    use super::{is_safe_prime, new};
     use ramp::Int;
 
     #[test]
     fn test_safe_prime_bit_length_too_small() {
         let sp = new(511);
-        assert_eq!(false, match sp {
-            Ok(_) => true,
-            Err(_) => false
-        });
+        assert_eq!(
+            false,
+            match sp {
+                Ok(_) => true,
+                Err(_) => false,
+            }
+        );
     }
 
     #[test]
     fn test_safe_prime() {
         let sp = new(512);
-        assert_eq!(true, match sp {
-            Ok(_) => true,
-            Err(_) => false
-        });
+        assert_eq!(
+            true,
+            match sp {
+                Ok(_) => true,
+                Err(_) => false,
+            }
+        );
     }
 
     #[test]
