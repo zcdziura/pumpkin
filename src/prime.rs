@@ -27,18 +27,24 @@ mod tests {
     #[test]
     fn test_prime_bit_length_too_small() {
         let p = new(511);
-        assert_eq!(false, match p {
-            Ok(_) => true,
-            Err(_) => false,
-        });
+        assert_eq!(
+            false,
+            match p {
+                Ok(_) => true,
+                Err(_) => false,
+            }
+        );
     }
 
     #[test]
     fn test_prime() {
         let p = new(512);
-        assert_eq!(true, match p {
-            Ok(_) => true,
-            Err(_) => false
-        });
+        assert_eq!(
+            true,
+            match p {
+                Ok(_) => true,
+                Err(_) => false,
+            }
+        );
     }
 }

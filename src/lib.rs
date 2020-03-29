@@ -1,7 +1,14 @@
 #![feature(test)]
-#![deny(missing_docs, missing_debug_implementations,
-    missing_copy_implementations, trivial_casts, trivial_numeric_casts,
-    unsafe_code, unused_import_braces, unused_qualifications)]
+#![deny(
+    missing_docs,
+    missing_debug_implementations,
+    missing_copy_implementations,
+    trivial_casts,
+    trivial_numeric_casts,
+    unsafe_code,
+    unused_import_braces,
+    unused_qualifications
+)]
 #![cfg_attr(feature = "dev", feature(plugin))]
 #![cfg_attr(feature = "dev", plugin(clippy))]
 
@@ -62,8 +69,8 @@ pub mod safe_prime;
 
 #[cfg(test)]
 mod tests {
-    use rand::rngs::OsRng;
     use super::{prime, safe_prime};
+    use rand::rngs::OsRng;
     use test::Bencher;
 
     #[bench]
